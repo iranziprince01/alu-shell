@@ -1,42 +1,19 @@
 #!/usr/bin/env bash
-# Manages the script manage_my_process.
-#   When passed the argument `start`:
-#     1. Starts manage_my_process
-#     2. Creates a file containings its PID in /var/run/my_process.pid
-#     3. Displays "manage_my_process started"
-#   When passed the argument `stop`:
-#     1. Stops manage_my_process
-#     2. Deletes the file /var/run/my_process.pid
-#     3. Displays "manage_my_process stopped"
-#   When passed the argument `restart`:
-#     1. Stops manage_my_process
-#     2. Deletes the file /var/run/my_process.pid
-#     3. Starts manage_my_process
-#     4. Creates a file containing its PID in /var/run/my_process.pid
-#     5. Displays "manage_my_process restarted"
-#   If any other or no arguments are passed, displays
-#+  "Usage: manage_my_process {start|stop|restart}"
+# This script creates the file /var/run/holbertonscript.pid containing its PID
+# Displays To infinity and beyond indefinitely
+# Displays I hate the kill command when receiving a SIGTERM signal
+# Displays Y U no love me?! when receiving a SIGINT signal
+# Deletes the file /var/run/holbertonscript.pid and terminate itself when receiving a SIGQUIT or SIGTERM signal
 
-if [ "$1" == "start" ]
-then
-  ./manage_my_process &
-  echo $$ > /var/run/my_process.pid
-  echo "manage_my_process started"
+function love() {
+    rm /var/run/holbertonscript.pid
+    exit
+}
 
-elif [ "$1" == "stop" ]
-then
-  kill "$(pgrep -f /manage_my_process)" 
-  rm /var/run/my_process.pid
-  echo "manage_my_process stopped"
+trap "echo I hate the kill command;love" SIGTERM
+trap "echo Y U no love me?!;love" SIGINT
 
-elif [ "$1" == "restart" ]
-then
-  kill "$(pgrep -f /manage_my_process)"
-  rm /var/run/my_process.pid
-  ./manage_my_process &
-  echo $$ > /var/run/my_process.pid
-  echo "manage_my_process restarted"
-
-else
-  echo "Usage: manage_my_process {start|stop|restart}"
-fi
+echo $$ >> /var/run/holbertonscript.pid
+while [ true ]; do
+    echo To infinity and beyond;
+done
