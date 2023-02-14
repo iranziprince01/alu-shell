@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Displays the PID, along with the process name, of processes
-# pgrep -l list name in addition to id
+# Bash scipr that Displays the PID, along with the process name, of processes
+# pgrep -l list name in addition to its ID
 pgrep -l bash
